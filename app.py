@@ -38,7 +38,19 @@ def save_data():
         print(str(e))
         response = {"error": "Internal Server Error"}
         return jsonify(response), 500
-        
+
+@app.route('/api/data', methods=['GET'])
+def get_data():
+    try:
+        cursor.execute("SELECT * FROM User_Data")
+        data = cursor.fetchall()
+        response_data = [{"name": row[0], "email": row[1]} for row in data]
+        return jsonify(response_data), 200
+    except Exception as e:
+        print("Error:", str(e))
+        response = {"error": "Internal Server Error"}
+        return jsonify(response), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -36,3 +36,34 @@ document.getElementById('data-form').addEventListener('submit', function(event) 
     });
 });
 
+// Fetch data from the server
+fetch('/api/data')
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+        // Select the data container
+        const dataContainer = document.getElementById('data-container');
+
+        // Iterate through the data and create card elements
+        data.forEach(item => {
+            // Create a new card element
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            // Populate card content with data from the server
+            card.innerHTML = `
+                <h2>${item.name}</h2>
+                <p>Email: ${item.email}</p>
+            `;
+            
+            // Append the card to the data container
+            dataContainer.appendChild(card);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
