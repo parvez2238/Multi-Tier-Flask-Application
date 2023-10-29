@@ -1,5 +1,5 @@
 #This file will contain your Flask server code
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file
 import mysql.connector
 
 app = Flask(__name__, static_folder='static')
@@ -54,4 +54,13 @@ def get_data():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+@app.route('/data')
+def data_page():
+    return send_file('data.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5001)
 
