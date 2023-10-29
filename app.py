@@ -56,11 +56,10 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
+from flask import send_from_directory
+
 @app.route('/data')
 def data_page():
-    return send_file('data.html')
+    return send_from_directory('.', 'data.html')
 
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5001)
 
