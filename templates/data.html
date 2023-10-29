@@ -6,7 +6,15 @@
 </head>
 <body>
     <div id="data-container" class="container">
-        <!-- Data will be displayed here -->
+        <!-- Data cards will be displayed here -->
+        {% for item in data %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <p class="card-text">{{ item.email }}</p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

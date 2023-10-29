@@ -1,5 +1,5 @@
 #This file will contain your Flask server code
-from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
+from flask import Flask, request, jsonify, render_template, send_from_directory
 import mysql.connector
 
 app = Flask(__name__, static_folder='static')
@@ -44,12 +44,23 @@ def get_data():
     try:
         cursor.execute("SELECT * FROM User_Data")
         data = cursor.fetchall()
-        response_data = [{"name": row[0], "email": row[1]} for row in data]
+        print("Fetched data from database:", data)
+        response_data = [{"name": row[1], "email": row[2]} for row in data]
         return jsonify(response_data), 200
     except Exception as e:
         print("Error:", str(e))
         response = {"error": "Internal Server Error"}
         return jsonify(response), 500
+
+@app.route('/data')
+def data_page():
+    try:
+        cursor.execute("SELECT * FROM User_Data")
+        data = cursor.fetchall()
+        response_data = [{"name": row[1], "email": row[2]} for row in data]
+        return render_template('data.html', data=response_data)
+    except Exception as e:
+        print("Error:", str(e))
 
 
 if __name__ == '__main__':
@@ -58,8 +69,6 @@ if __name__ == '__main__':
 
 
 
-@app.route('/data')
-def data_page():
-    return send_from_directory('templates', 'data.html')
+
 
 
