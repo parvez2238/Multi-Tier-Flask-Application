@@ -1,20 +1,25 @@
-#This file will contain Flask server code
-from flask import Flask, request, jsonify, render_template, send_from_directory
+#This file will contain your Flask server code
+from flask import Flask, request, jsonify, render_template
 import mysql.connector
+import os
 
 app = Flask(__name__, static_folder='static')
+
+MYSQL_HOST = os.getenv('MYSQL_HOST', 'mysql') # Get MySQL host from environment variable (default to 'mysql' if not set)
+
 db = mysql.connector.connect(
-    host="localhost",  # Write the hostname
-    user="root",       # MySQL username.
-    password="Parvez@2238",  # MySQL password.
-    database="User_Form"  # MySQL database name.
+    host= MYSQL_HOST,  # Use "localhost" if your database is on the same machine. If not, replace with the actual host address.
+    user="root",       # Replace with your MySQL username.
+    password="Parvez@2238",  # Replace with your MySQL password.
+    database="User_Form"  # Replace with your MySQL database name.
 )
 cursor = db.cursor()
 
-TABLE_NAME = "User_Data"  # MySQL table name.
+TABLE_NAME = "User_Data"  # Replace with your MySQL table name.
 
 @app.route('/')
 def index():
+    print("Request received!")  # Add this line for debugging
     return render_template('index.html')
 
 # Route to handle form submissions
@@ -38,29 +43,20 @@ def save_data():
         print(str(e))
         response = {"error": "Internal Server Error"}
         return jsonify(response), 500
-    
-# Route to handle the data fatch request
+
 @app.route('/api/data', methods=['GET'])
 def get_data():
     try:
-        #Select the data from MYSQL Table
         cursor.execute("SELECT * FROM User_Data")
         data = cursor.fetchall()
-
-        # Fatch and print data from database
         print("Fetched data from database:", data)
-
-        # Get data from colume 1 and 2 cause 0 is the ID.
         response_data = [{"name": row[1], "email": row[2]} for row in data]
         return jsonify(response_data), 200
-    
-    # Exception Handeller
     except Exception as e:
         print("Error:", str(e))
         response = {"error": "Internal Server Error"}
         return jsonify(response), 500
 
-# Route for showing the data 5000/data
 @app.route('/data')
 def data_page():
     try:
@@ -73,7 +69,7 @@ def data_page():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True,host='0.0.0.0', port=5000)
 
 
 

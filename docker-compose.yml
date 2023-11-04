@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Parvez@2238
+      MYSQL_DATABASE: User_Form
+    ports:
+      - "3306:3306"  # Map MySQL container port 3306 to host machine port 3306
+    networks:
+      - app-network  # Use a custom network for communication between containers
+
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  # Map Flask application container port 5000 to host machine port 5000
+    environment:
+      MYSQL_HOST: MYSQL_HOST  # Use the service name defined above as the MySQL host
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Parvez@2238
+      MYSQL_DATABASE: User_Form
+    depends_on:
+      - mysql  # Ensure the Flask application container starts after the MySQL container
+    networks:
+      - app-network  # Use the same custom network for communication between containers
+
+networks:
+  app-network:  # Define a custom network for communication between containers
+    driver: bridge
