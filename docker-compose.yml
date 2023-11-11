@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   mysql:
-    image: mysql:latest
+    image: prahama/mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Parvez@2238
