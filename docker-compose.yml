@@ -6,6 +6,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Parvez@2238
       MYSQL_DATABASE: User_Form
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3307:3306"  # Map MySQL container port 3306 to host machine port 3306
     networks:
