@@ -1,12 +1,13 @@
-version: '3'
+version: '3.1'
 services:
   mysql:
     image: mysql:latest
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Parvez@2238
       MYSQL_DATABASE: User_Form
     ports:
-      - "3306:3306"  # Map MySQL container port 3306 to host machine port 3306
+      - "3307:3306"  # Map MySQL container port 3306 to host machine port 3306
     networks:
       - app-network  # Use a custom network for communication between containers
 
@@ -17,7 +18,7 @@ services:
     ports:
       - "5000:5000"  # Map Flask application container port 5000 to host machine port 5000
     environment:
-      MYSQL_HOST: MYSQL_HOST  # Use the service name defined above as the MySQL host
+      MYSQL_HOST: mysql  # Use the service name defined above as the MySQL host
       MYSQL_USER: root
       MYSQL_PASSWORD: Parvez@2238
       MYSQL_DATABASE: User_Form
