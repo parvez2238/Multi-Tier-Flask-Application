@@ -2,12 +2,12 @@ version: '3.1'
 services:
   mysql:
     image: prahama/mysql:latest
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Parvez@2238
       MYSQL_DATABASE: User_Form
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql #mysql script located
+      - user_form_mysql_data:/var/lib/mysql # Docker Data volume that will store the data
     ports:
       - "3307:3306"  # Map MySQL container port 3306 to host machine port 3306
     networks:
@@ -32,3 +32,6 @@ services:
 networks:
   app-network:  # Define a custom network for communication between containers
     driver: bridge
+
+volumes:
+  user_form_mysql_data: #name of the volume that added for store data inside the contaoiner so that I will never loss the data.
