@@ -1,6 +1,6 @@
 #This file will contain Flask server code
-from flask import Flask, request, jsonify, render_template
-import mysql.connector
+from flask import Flask, request, jsonify, render_template, redirect, url_for # type: ignore
+import mysql.connector # type: ignore
 import os
 
 app = Flask(__name__, static_folder='static')
@@ -37,6 +37,10 @@ def save_data():
         # Return success message
         response = {"message": "Data saved successfully!"}
         return jsonify(response), 200
+        
+        # Redirect to the /data page after successful save
+        #return render_template('data.html')
+        #return redirect(url_for('data_page'))
 
     except Exception as e:
         # Handle errors and return error response
