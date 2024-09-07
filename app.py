@@ -1,6 +1,6 @@
 #This file will contain Flask server code
-from flask import Flask, request, jsonify, render_template, redirect, url_for # type: ignore
-import mysql.connector # type: ignore
+from flask import Flask, request, jsonify, render_template, redirect, url_for 
+import mysql.connector 
 import os
 
 app = Flask(__name__, static_folder='static')
