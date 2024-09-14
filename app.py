@@ -8,7 +8,8 @@ app = Flask(__name__, static_folder='static')
 MYSQL_HOST = os.getenv('MYSQL_HOST', 'mysql') # Get MySQL host from environment variable (default to 'mysql' if not set)
 
 db = mysql.connector.connect(
-    host= MYSQL_HOST,  # MYSQL is running on container default host is MYSQL_HOST(if it is local mechine use localhost)
+    #host= MYSQL_HOST, 
+    host="localhost", # MYSQL is running on container default host is MYSQL_HOST(if it is local mechine use localhost)
     user="root",       # MySQL username.(default root)
     password="Parvez@2238",  # MySQL password.
     database="User_Form"  # MySQL database name. (Create database)
