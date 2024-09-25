@@ -30,6 +30,15 @@ services:
     networks:
       - app-network  # Use the same custom network for communication between containers
 
+  apache:
+    image: httpd:latest
+    volumes:
+      - ./your-web-content/:/usr/local/apache2/htdocs/
+    ports:
+      - "8080:80"  # Map container port 80 to host port 8080
+    networks:
+      - app-network
+
 networks:
   app-network:  # Define a custom network for communication between containers
     driver: bridge
